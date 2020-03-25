@@ -1,0 +1,6 @@
+﻿  main.c
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(11,14): warning C4013: niezdefiniowany "setlocale"; przy założeniu, że extern zwraca int
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(15,13): warning C4013: niezdefiniowany "gets"; przy założeniu, że extern zwraca int
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(15,20): warning C4047: "=": "char *" różni się w poziomach operatorów pośrednich od "int"
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(62,38): warning C4013: niezdefiniowany "RndNum"; przy założeniu, że extern zwraca int
+  zaliczeniejezykowprogramowania.vcxproj -> C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\Debug\zaliczeniejezykowprogramowania.exe
