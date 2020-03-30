@@ -4,6 +4,7 @@
 
 char* GenerateExpression(int Dlugosc);
 char GetSingleChar(int ID);
+char* replace_char(char* str, char find, char replace);
 
 //Program jest napisany w C11, ISO/IEC 9899:2011 (https://en.wikipedia.org/wiki/C11_(C_standard_revision))
 int main(int argc, char *argv[])
@@ -11,11 +12,8 @@ int main(int argc, char *argv[])
     setlocale(0, "");
     //Pobieranie d³ugoœci wyra¿enia matematycznego
     puts("Podaj d³ugoœæ wyra¿enia matematycznego");
-    char tekst[8], *n;
-    n = gets(tekst);
-
-    //konwersja char[] do int
-    int Dlugosc = atoi(tekst);
+    int Dlugosc;
+    scanf("%d", &Dlugosc);
 
     //liczba jest zbyt ma³a
     if (Dlugosc < 1) {
@@ -24,11 +22,27 @@ int main(int argc, char *argv[])
     }
     char* wyr;
     wyr = GenerateExpression(Dlugosc);
+    wyr = replace_char(wyr, "ý", "\0");
 
     printf(wyr);
 
+    FILE* f;
+
+    f = fopen("./test.txt", "w");
+    fprintf(f, wyr, 0);
+
+
     return 0;
 
+}
+
+char* replace_char(char* str, char find, char replace) {
+    char* current_pos = strchr(str, find);
+    while (current_pos) {
+        *current_pos = replace;
+        current_pos = strchr(current_pos, find);
+    }
+    return str;
 }
 
 enum Symbols
@@ -54,21 +68,21 @@ enum Symbols
 char* GenerateExpression(int Dlugosc) {
     //Definiowanie wyra¿enia
     char* wyr;
-    wyr = malloc(sizeof(char) * Dlugosc);
+    wyr = malloc((sizeof(char) * (Dlugosc)));
     srand((unsigned int)time(NULL));
 
-    
-    for (int i = 0; i < Dlugosc; i++) {
+    int i;
+    for (i = 0; i < Dlugosc; i++) {
         char l = GetSingleChar(RndNum());
         wyr[i] = l;
     }
 
-    
+    wyr[i] = '\0';
     return wyr;
 }
 
 int RndNum() {
-    return (int)(rand() % 16);
+    return (int)(rand() % 15);
 }
 
 char GetSingleChar(int ID) {
@@ -77,52 +91,52 @@ char GetSingleChar(int ID) {
     char sym = '0';
     switch (s) {
         case zero: 
-            sym = '0';
+            return '0';
             break;
         case one:
-            sym = '1';
+            return '1';
             break;
         case two:
-            sym = '2';
+            return '2';
             break;
         case three:
-            sym = '3';
+            return '3';
             break;
         case four:
-            sym = '4';
+            return '4';
             break;
         case five:
-            sym = '5';
+            return '5';
             break;
         case six:
-            sym = '6';
+            return '6';
             break;
         case seven: 
-            sym = '7';
+            return '7';
             break;
         case eight:
-            sym = '8';
+            return '8';
             break;
         case nine:
-            sym = '9';
+            return '9';
             break;
         case plus:
-            sym = '+';
+            return '+';
             break;
         case minus:
-            sym = '-';
+            return '-';
             break;
         case times:
-            sym = '*';
+            return '*';
             break;
         case divide:
-            sym = '/';
+            return '/';
             break;
         case bracLeft:
-            sym = '(';
+            return '(';
             break;
         case bracRight:
-            sym = ')';
+            return ')';
             break;
     }
 
