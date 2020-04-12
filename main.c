@@ -2,9 +2,38 @@
 #include <stdlib.h>
 #include <time.h>
 
+#pragma region Defs
+
+typedef enum {
+    zero = 0,
+    one = 1,
+    two = 2,
+    three = 3,
+    four = 4,
+    five = 5,
+    six = 6,
+    seven = 7,
+    eight = 8,
+    nine = 9,
+    plus = 10,
+    minus = 11,
+    times = 12,
+    divide = 13,
+    bracLeft = 14,
+    bracRight = 15
+} Symbols;
+#pragma endregion
+
 char* GenerateExpression(int Dlugosc);
 char GetSingleChar(int ID);
 char* replace_char(char* str, char find, char replace);
+char GetAllowedChar(Symbols* symbols);
+int RndNum(int to);
+
+
+
+
+
 
 //Program jest napisany w C11, ISO/IEC 9899:2011 (https://en.wikipedia.org/wiki/C11_(C_standard_revision))
 int main(int argc, char *argv[])
@@ -45,35 +74,35 @@ char* replace_char(char* str, char find, char replace) {
     return str;
 }
 
-enum Symbols
-{
-    zero = 0,
-    one = 1,
-    two = 2,
-    three = 3,
-    four = 4,
-    five = 5,
-    six = 6,
-    seven = 7,
-    eight = 8,
-    nine = 9,
-    plus = 10,
-    minus = 11,
-    times = 12,
-    divide = 13,
-    bracLeft = 14,
-    bracRight = 15
-};
+
 
 char* GenerateExpression(int Dlugosc) {
     //Definiowanie wyra¿enia
     char* wyr;
     wyr = malloc((sizeof(char) * (Dlugosc)));
     srand((unsigned int)time(NULL));
+    
 
     int i;
     for (i = 0; i < Dlugosc; i++) {
-        char l = GetSingleChar(RndNum());
+        char l;
+
+        if (i == 0 && Dlugosc <= 3) {
+            //Poprawne znaki na pierwszej pozycji:
+            // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+            Symbols Allowed[] = {zero, one, two, three, four, five, six, seven, eight, nine, minus };
+            int size = sizeof(Allowed) / sizeof(Allowed[0]);
+            
+            l = GetAllowedChar(Allowed, size);
+        }
+        else if (i == 0) {
+            //Poprawne znaki na pierwszej pozycji:
+            // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, (
+            Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, minus, bracLeft };
+            int size = sizeof(Allowed) / sizeof(Allowed[0]);
+            l = GetAllowedChar(Allowed, size);
+        }
+
         wyr[i] = l;
     }
 
@@ -81,12 +110,14 @@ char* GenerateExpression(int Dlugosc) {
     return wyr;
 }
 
-int RndNum() {
-    return (int)(rand() % 15);
+int RndNum(int to) {
+    return (int)(rand() % to);
 }
 
+
+
 char GetSingleChar(int ID) {
-    enum Symbols s = ID;
+    Symbols s = ID;
 
     char sym = '0';
     switch (s) {
@@ -142,3 +173,13 @@ char GetSingleChar(int ID) {
 
     return sym;
 }
+
+
+char GetAllowedChar(Symbols symbols[], int size) {
+    int index = RndNum(size);
+    char ch = GetSingleChar(symbols[index]);
+    return ch;
+}
+
+
+
