@@ -28,3 +28,5 @@ zaliczeniejezykowprogramowania.dir/Debug/zaliczen.224E7FC9.tlog/zaliczeniejezyko
 Debug/zaliczeniejezykowprogramowania.pdb
 Debug/zaliczeniejezykowprogramowania.ilk
 Debug/zaliczeniejezykowprogramowania.exe
+zaliczen.*.tlog
+*.log

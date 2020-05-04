@@ -56,8 +56,11 @@ int main(int argc, char *argv[])
 
     FILE* f;
 
-    f = fopen("./dane.txt", "w");
+    char filename[] = "./dane.txt";
+
+    f = fopen(filename, "w");
     fprintf(f, wyr, 0);
+    fclose(f);
 
 
     return 0;
