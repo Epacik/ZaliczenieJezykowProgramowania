@@ -13,7 +13,7 @@ Symbols Syms[17] = {
 };
 
 char SymbolChars[17] = {
-    '🤔', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '(', ')'
+    ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '(', ')'
 };
 
 Symbols GetSymbol(char sym);
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 
 
     wyr = GenerateExpression(Length);
-    wyr = replace_char(wyr, "🤔", "");
+    wyr = replace_char(wyr, " ", "");
 
     puts(wyr);
 
