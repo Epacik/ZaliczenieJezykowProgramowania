@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
     setlocale(0, "");
 
-    CSPRNG rng = csprng_create(rng);        // Constructor
+    CSPRNG rng = csprng_create();        // Constructor
     if (!rng)
     {
         fprintf(stderr, "%s\n", "No CSPRNG! Fooey!");
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     }
 
     long n = csprng_get_int(rng);           // Get an int
-
+    srand((unsigned int)n);
 
 
     int Length;
