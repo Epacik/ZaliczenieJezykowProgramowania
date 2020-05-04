@@ -5,23 +5,7 @@
 #pragma region Defs
 
 typedef enum {
-    none = -1,
-    zero = 0,
-    one = 1,
-    two = 2,
-    three = 3,
-    four = 4,
-    five = 5,
-    six = 6,
-    seven = 7,
-    eight = 8,
-    nine = 9,
-    plus = 10,
-    minus = 11,
-    times = 12,
-    divide = 13,
-    bracLeft = 14,
-    bracRight = 15
+    none = -1, zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7, eight = 8, nine = 9, plus = 10, minus = 11, times = 12, divide = 13, bracLeft = 14, bracRight = 15
 } Symbols;
 
 Symbols Syms[17] = {
@@ -264,6 +248,7 @@ char GetSingleChar(int ID) {
     return SymbolChars[ID + 1];
 }
 
+///
 Symbols GetSymbol(char sym) {
     int i = 0;
     while(sym != SymbolChars[i])
