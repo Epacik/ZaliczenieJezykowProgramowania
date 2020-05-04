@@ -1,10 +1,11 @@
-#include <stdio.h>
+Ôªø#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 #pragma region Defs
 
 typedef enum {
+    none = -1,
     zero = 0,
     one = 1,
     two = 2,
@@ -22,16 +23,23 @@ typedef enum {
     bracLeft = 14,
     bracRight = 15
 } Symbols;
-#pragma endregion
 
-char* GenerateExpression(int Dlugosc);
+Symbols Syms[17] = {
+    none, zero, one, two, three, four, five, six, seven, eight, nine, plus, minus, times, divide, bracLeft, bracRight
+};
+
+char SymbolChars[17] = {
+    'ü§î', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '(', ')'
+};
+
+Symbols GetSymbol(char sym);
+char* GenerateExpression(int Length);
 char GetSingleChar(int ID);
 char* replace_char(char* str, char find, char replace);
 char GetAllowedChar(Symbols* symbols);
 int RndNum(int to);
 
-
-
+#pragma endregion
 
 
 
@@ -39,25 +47,32 @@ int RndNum(int to);
 int main(int argc, char *argv[])
 {
     setlocale(0, "");
-    //Pobieranie d≥ugoúci wyraøenia matematycznego
-    puts("Podaj d≥ugoúÊ wyraøenia matematycznego");
-    int Dlugosc;
-    scanf("%d", &Dlugosc);
+    //Pobieranie d≈Çugo≈õci wyra≈ºenia matematycznego
+    puts("Podaj d≈Çugo≈õƒá wyra≈ºenia matematycznego");
+    int Length;
+    scanf("%d", &Length);
 
-    //liczba jest zbyt ma≥a
-    if (Dlugosc < 1) {
-        puts("Wprowadzono zbyt ma≥π liczbÍ, lub nie porowadzono liczby");
+    //liczba jest zbyt ma≈Ça
+    if (Length < 1) {
+        puts("Wprowadzono zbyt ma≈ÇƒÖ liczbƒô, lub nie porowadzono liczby");
         return -1;
     }
     char* wyr;
-    wyr = GenerateExpression(Dlugosc);
-    wyr = replace_char(wyr, "˝", "\0");
 
-    printf(wyr);
+    for (int i = 0; i < 50000; i++)
+    {
+        puts(GenerateExpression(Length));
+    }
+
+
+    wyr = GenerateExpression(Length);
+    wyr = replace_char(wyr, "ü§î", "");
+
+    puts(wyr);
 
     FILE* f;
 
-    f = fopen("./test.txt", "w");
+    f = fopen("./dane.txt", "w");
     fprintf(f, wyr, 0);
 
 
@@ -74,25 +89,38 @@ char* replace_char(char* str, char find, char replace) {
     return str;
 }
 
+int OpenedBrackets = 0;
 
-
-char* GenerateExpression(int Dlugosc) {
-    //Definiowanie wyraøenia
+char* GenerateExpression(int Length) {
+    //Definiowanie wyra≈ºenia
     char* wyr;
-    wyr = malloc((sizeof(char) * (Dlugosc)));
+    wyr = malloc((sizeof(char) * (Length)));
     srand((unsigned int)time(NULL));
-    
 
     int i;
-    for (i = 0; i < Dlugosc; i++) {
+    for (i = 0; i < Length; i++) {
         char l;
 
-        if (i == 0 && Dlugosc <= 3) {
+        Symbols lastChar = none;
+
+        if(i - 1 != -1){
+            lastChar = GetSymbol(wyr[i - 1]);
+        }
+
+        OpenedBrackets = 0;
+
+        for (int j = 0; j < i; j++) {
+            if (wyr[j] == '(')
+                OpenedBrackets += 1;
+            else if (wyr[j] == ')')
+                OpenedBrackets -= 1;
+        }
+
+        if (i == 0 && Length <= 3) {
             //Poprawne znaki na pierwszej pozycji:
             // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
             Symbols Allowed[] = {zero, one, two, three, four, five, six, seven, eight, nine, minus };
             int size = sizeof(Allowed) / sizeof(Allowed[0]);
-            
             l = GetAllowedChar(Allowed, size);
         }
         else if (i == 0) {
@@ -102,8 +130,124 @@ char* GenerateExpression(int Dlugosc) {
             int size = sizeof(Allowed) / sizeof(Allowed[0]);
             l = GetAllowedChar(Allowed, size);
         }
+        else if (Length - i > 3) {
+            if (OpenedBrackets > 0 && Length - i - 1 == OpenedBrackets) {
+                l = GetSingleChar(bracRight);
+            }
+            else if (lastChar == bracLeft) {
+                Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, bracLeft };
+                int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                l = GetAllowedChar(Allowed, size);
+            }
+
+            else if ((lastChar == times || lastChar == divide || lastChar == plus || lastChar == minus))
+            {
+                Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, bracLeft };
+                int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                l = GetAllowedChar(Allowed, size);
+            }
+            else if (lastChar >= zero && lastChar <= nine) {
+
+                if (OpenedBrackets > 0) {
+                    if (i + 1 == Length) {
+                        Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, bracRight };
+                        int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                        l = GetAllowedChar(Allowed, size);
+                    }
+                    else {
+                        Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, plus, minus, times, divide, bracRight };
+                        int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                        l = GetAllowedChar(Allowed, size);
+                    }
+                }
+                else {
+                    if (i + 1 == Length) {
+                        Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine };
+                        int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                        l = GetAllowedChar(Allowed, size);
+                    }
+                    else {
+                        Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, plus, minus, times, divide };
+                        int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                        l = GetAllowedChar(Allowed, size);
+                    }
+                }
+
+            }
+            else if (lastChar == bracRight) {
+                Symbols Allowed[] = { plus, minus, times, divide };
+                int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                l = GetAllowedChar(Allowed, size);
+            }
+        }
+        else {
+            if (OpenedBrackets > 0 && Length - i - 1 == OpenedBrackets) {
+                l = GetSingleChar(bracRight);
+            }
+            else if (lastChar == bracLeft) {
+                Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine };
+                int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                l = GetAllowedChar(Allowed, size);
+            }
+
+            else if ((lastChar == times || lastChar == divide || lastChar == plus || lastChar == minus))
+            {
+                Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine };
+                int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                l = GetAllowedChar(Allowed, size);
+            }
+            else if (lastChar >= zero && lastChar <= nine) {
+
+                if (OpenedBrackets > 0 && Length - i - 1 > OpenedBrackets) {
+                    if (i + 1 == Length) {
+                        Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, bracRight };
+                        int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                        l = GetAllowedChar(Allowed, size);
+                    }
+                    else {
+                        Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, plus, minus, times, divide, bracRight };
+                        int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                        l = GetAllowedChar(Allowed, size);
+                    }
+                }
+                else {
+                    if (i + 1 == Length) {
+                        Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine };
+                        int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                        l = GetAllowedChar(Allowed, size);
+                    }
+                    else {
+                        Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, plus, minus, times, divide };
+                        int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                        l = GetAllowedChar(Allowed, size);
+                    }
+                }
+
+            }
+            else if (lastChar == bracRight) {
+                Symbols Allowed[] = { plus, minus, times, divide };
+                int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                l = GetAllowedChar(Allowed, size);
+            }
+        }
+
+        if ((Length - i - OpenedBrackets == 3 && (l == ')')) || (Length - i == 1 && (l == '*' || l == '/' || l == '-' || l == '+'))) {
+
+            Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine };
+            int size = sizeof(Allowed) / sizeof(Allowed[0]);
+            l = GetAllowedChar(Allowed, size);
+        }
+
 
         wyr[i] = l;
+    }
+
+    for (int j = i - 1; j >= 0; j--) {
+        if (j > 0 && wyr[j] >= '0' && wyr[j] <= '9' && wyr[j - 1] == ')')
+        {
+            wyr[j - 1] = wyr[j];
+            wyr[j] = ')';
+        }
     }
 
     wyr[i] = '\0';
@@ -117,62 +261,17 @@ int RndNum(int to) {
 
 
 char GetSingleChar(int ID) {
-    Symbols s = ID;
-
-    char sym = '0';
-    switch (s) {
-        case zero: 
-            return '0';
-            break;
-        case one:
-            return '1';
-            break;
-        case two:
-            return '2';
-            break;
-        case three:
-            return '3';
-            break;
-        case four:
-            return '4';
-            break;
-        case five:
-            return '5';
-            break;
-        case six:
-            return '6';
-            break;
-        case seven: 
-            return '7';
-            break;
-        case eight:
-            return '8';
-            break;
-        case nine:
-            return '9';
-            break;
-        case plus:
-            return '+';
-            break;
-        case minus:
-            return '-';
-            break;
-        case times:
-            return '*';
-            break;
-        case divide:
-            return '/';
-            break;
-        case bracLeft:
-            return '(';
-            break;
-        case bracRight:
-            return ')';
-            break;
-    }
-
-    return sym;
+    return SymbolChars[ID + 1];
 }
+
+Symbols GetSymbol(char sym) {
+    int i = 0;
+    while(sym != SymbolChars[i])
+    {
+        i++;
+    }
+    return Syms[i];
+};
 
 
 char GetAllowedChar(Symbols symbols[], int size) {
@@ -180,6 +279,7 @@ char GetAllowedChar(Symbols symbols[], int size) {
     char ch = GetSingleChar(symbols[index]);
     return ch;
 }
+
 
 
 

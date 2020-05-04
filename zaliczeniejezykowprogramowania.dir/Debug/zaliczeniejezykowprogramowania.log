@@ -1,17 +1,33 @@
 ﻿  main.c
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(41,14): warning C4013: niezdefiniowany "setlocale"; przy założeniu, że extern zwraca int
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(54,33): warning C4047: "funkcja": "char" różni się w poziomach operatorów pośrednich od "char [2]"
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(54,33): warning C4024: "replace_char": różne typy dla formalnego i rzeczywistego parametru 2
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(54,39): warning C4047: "funkcja": "char" różni się w poziomach operatorów pośrednich od "char [2]"
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(54,39): warning C4024: "replace_char": różne typy dla formalnego i rzeczywistego parametru 3
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(45,1): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1274): message : zobacz deklarację „scanf”
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(60,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : zobacz deklarację „fopen”
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(69,31): warning C4013: niezdefiniowany "strchr"; przy założeniu, że extern zwraca int
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(72,48): warning C4047: "=": "char *" różni się w poziomach operatorów pośrednich od "int"
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(69,1): warning C4047: "inicjowanie": "char *" różni się w poziomach operatorów pośrednich od "int"
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(96,51): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(171,50): warning C4029: zadeklarowana formalna lista parametrów różniąca się od definicji
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(99): warning C4700: użycie niezainicjowanej zmiennej lokalnej "l"
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(32,5): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\U0001F914" nie może być przedstawiony w bieżącej stronie kodowej (1250)
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(31,1): warning C4305: "inicjowanie": obcięcie z "int" do "char"
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(49,14): warning C4013: niezdefiniowany "setlocale"; przy założeniu, że extern zwraca int
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(69,29): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\U0001F914" nie może być przedstawiony w bieżącej stronie kodowej (1250)
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(69,35): warning C4047: "funkcja": "char" różni się w poziomach operatorów pośrednich od "char [3]"
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(69,35): warning C4024: "replace_char": różne typy dla formalnego i rzeczywistego parametru 2
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(69,39): warning C4047: "funkcja": "char" różni się w poziomach operatorów pośrednich od "char [1]"
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(69,39): warning C4024: "replace_char": różne typy dla formalnego i rzeczywistego parametru 3
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(53,5): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(75,9): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(84,31): warning C4013: niezdefiniowany "strchr"; przy założeniu, że extern zwraca int
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(87,48): warning C4047: "=": "char *" różni się w poziomach operatorów pośrednich od "int"
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(84,1): warning C4047: "inicjowanie": "char *" różni się w poziomach operatorów pośrednich od "int"
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(124,45): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(131,45): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(140,49): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(147,49): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(155,57): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(160,57): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(167,57): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(172,57): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(180,49): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(190,49): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(197,49): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(205,57): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(210,57): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(217,57): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(222,57): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(230,49): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(238,45): warning C4020: "GetAllowedChar": zbyt wiele parametrów rzeczywistych
+C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c(277,50): warning C4029: zadeklarowana formalna lista parametrów różniąca się od definicji
   zaliczeniejezykowprogramowania.vcxproj -> C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\Debug\zaliczeniejezykowprogramowania.exe
