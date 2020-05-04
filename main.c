@@ -17,7 +17,7 @@ char SymbolChars[17] = {
 };
 
 Symbols GetSymbol(char sym);
-char* Generateexprression(int Length);
+char* GenerateExpression(int Length);
 char GetSingleChar(int ID);
 char* replace_char(char* str, char find, char replace);
 char GetAllowedChar(Symbols* symbols, int size);
@@ -30,11 +30,19 @@ int RndNum(int to);
 //Program jest napisany w C11, ISO/IEC 9899:2011 (https://en.wikipedia.org/wiki/C11_(C_standard_revision))
 int main(int argc, char *argv[])
 {
+
     setlocale(0, "");
-    //Pobieranie długości exprażenia matematycznego
-    puts("Podaj długość exprażenia matematycznego");
     int Length;
-    scanf("%d", &Length);
+    if (argc == 1)
+    {
+        //Pobieranie długości wyrażenia matematycznego
+        puts("Podaj długość wyrażenia matematycznego");
+
+        scanf("%d", &Length);
+    }
+    else {
+        Length = atoi(argv[1]);
+    }
 
     //liczba jest zbyt mała
     if (Length < 1) {
@@ -43,24 +51,26 @@ int main(int argc, char *argv[])
     }
     char* expr;
 
-    expr = Generateexprression(Length);
+    expr = GenerateExpression(Length);
     expr = replace_char(expr, " ", "");
 
 
     //Test generatora exprażeń
     /*for (int i = 0; i < 50000; i++)
     {
-        puts(Generateexprression(Length));
+        puts(GenerateExpression(Length));
     }*/
-
-    puts(expr);
-
+    if (argc == 1) {
+        puts(expr);
+    }
     FILE* f;
 
     char filename[] = "./dane.txt";
 
     f = fopen(filename, "w");
+
     fprintf(f, expr, 0);
+
     fclose(f);
 
 
@@ -79,8 +89,8 @@ char* replace_char(char* str, char find, char replace) {
 
 
 
-char* Generateexprression(int Length) {
-    //Definiowanie exprażenia
+char* GenerateExpression(int Length) {
+    //Definiowanie wyrażenia
     char* expr;
     expr = malloc((sizeof(char) * (Length)));
     srand((unsigned int)time(NULL));
@@ -106,19 +116,19 @@ char* Generateexprression(int Length) {
                 OpenedBrackets -= 1;
         }
 
-        if (i == 0 && Length <= 3) {
+        if (i == 0) {
             //Poprawne znaki na pierwszej pozycji:
-            // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-            Symbols Allowed[] = {zero, one, two, three, four, five, six, seven, eight, nine, minus };
+            // 1, 2, 3, 4, 5, 6, 7, 8, 9, (
+            Symbols Allowed[] = { one, two, three, four, five, six, seven, eight, nine, minus, bracLeft };
             int size = sizeof(Allowed) / sizeof(Allowed[0]);
-            l = GetAllowedChar(Allowed, size);
-        }
-        else if (i == 0) {
-            //Poprawne znaki na pierwszej pozycji:
-            // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, (
-            Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, minus, bracLeft };
-            int size = sizeof(Allowed) / sizeof(Allowed[0]);
-            l = GetAllowedChar(Allowed, size);
+
+            if (Length <= 3) {
+                //Pomija 2 ostatnie elementy dla wyrażenia o długości 3
+                l = GetAllowedChar(Allowed, size - 2);
+            }
+            else {
+                l = GetAllowedChar(Allowed, size);
+            }
         }
         else if (Length - i > 3) {
             if (OpenedBrackets > 0 && Length - i - 1 == OpenedBrackets) {
@@ -127,27 +137,21 @@ char* Generateexprression(int Length) {
             }
             else if (lastChar == bracLeft) {
                 //Poprawne znaki po otwarciu nawiasu:
-                //0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -, (
-                Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, minus, bracLeft };
+                // 1, 2, 3, 4, 5, 6, 7, 8, 9, -, (
+                Symbols Allowed[] = {  one, two, three, four, five, six, seven, eight, nine, minus, bracLeft };
                 int size = sizeof(Allowed) / sizeof(Allowed[0]);
                 l = GetAllowedChar(Allowed, size);
             }
 
-            else if ((lastChar == times || lastChar == plus || lastChar == minus))
+            else if ((lastChar == times || lastChar == divide || lastChar == plus || lastChar == minus))
             {
                 //Symbole dozwolone po znaku działania
-                // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, (
-                Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, bracLeft };
-                int size = sizeof(Allowed) / sizeof(Allowed[0]);
-                l = GetAllowedChar(Allowed, size);
-            }
-            else if (lastChar == divide) {
-                //Symbole dozwolone po znaku działania
                 // 1, 2, 3, 4, 5, 6, 7, 8, 9, (
-                Symbols Allowed[] = { one, two, three, four, five, six, seven, eight, nine, bracLeft };
+                Symbols Allowed[] = {  one, two, three, four, five, six, seven, eight, nine, bracLeft };
                 int size = sizeof(Allowed) / sizeof(Allowed[0]);
                 l = GetAllowedChar(Allowed, size);
             }
+
             else if (lastChar >= zero && lastChar <= nine) {
 
                 if (OpenedBrackets > 0) {
@@ -187,14 +191,14 @@ char* Generateexprression(int Length) {
                 l = GetSingleChar(bracRight);
             }
             else if (lastChar == bracLeft) {
-                Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine };
+                Symbols Allowed[] = { one, two, three, four, five, six, seven, eight, nine };
                 int size = sizeof(Allowed) / sizeof(Allowed[0]);
                 l = GetAllowedChar(Allowed, size);
             }
 
             else if ((lastChar == times || lastChar == divide || lastChar == plus || lastChar == minus))
             {
-                Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine };
+                Symbols Allowed[] = { one, two, three, four, five, six, seven, eight, nine };
                 int size = sizeof(Allowed) / sizeof(Allowed[0]);
                 l = GetAllowedChar(Allowed, size);
             }
@@ -235,7 +239,7 @@ char* Generateexprression(int Length) {
 
         if ((Length - i - OpenedBrackets == 3 && (l == ')')) || (Length - i == 1 && (l == '*' || l == '/' || l == '-' || l == '+'))) {
 
-            Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine };
+            Symbols Allowed[] = { one, two, three, four, five, six, seven, eight, nine };
             int size = sizeof(Allowed) / sizeof(Allowed[0]);
             l = GetAllowedChar(Allowed, size);
         }

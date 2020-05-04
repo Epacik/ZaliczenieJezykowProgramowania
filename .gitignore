@@ -30,3 +30,4 @@ Debug/zaliczeniejezykowprogramowania.ilk
 Debug/zaliczeniejezykowprogramowania.exe
 zaliczen.*.tlog
 *.log
+tests/exprTestResult.txt
