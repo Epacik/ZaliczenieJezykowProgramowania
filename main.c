@@ -17,10 +17,10 @@ char SymbolChars[17] = {
 };
 
 Symbols GetSymbol(char sym);
-char* GenerateExpression(int Length);
+char* Generateexprression(int Length);
 char GetSingleChar(int ID);
 char* replace_char(char* str, char find, char replace);
-char GetAllowedChar(Symbols* symbols);
+char GetAllowedChar(Symbols* symbols, int size);
 int RndNum(int to);
 
 #pragma endregion
@@ -31,8 +31,8 @@ int RndNum(int to);
 int main(int argc, char *argv[])
 {
     setlocale(0, "");
-    //Pobieranie długości wyrażenia matematycznego
-    puts("Podaj długość wyrażenia matematycznego");
+    //Pobieranie długości exprażenia matematycznego
+    puts("Podaj długość exprażenia matematycznego");
     int Length;
     scanf("%d", &Length);
 
@@ -41,19 +41,26 @@ int main(int argc, char *argv[])
         puts("Wprowadzono zbyt małą liczbę, lub nie porowadzono liczby");
         return -1;
     }
-    char* wyr;
+    char* expr;
 
-    wyr = GenerateExpression(Length);
-    wyr = replace_char(wyr, " ", "");
+    expr = Generateexprression(Length);
+    expr = replace_char(expr, " ", "");
 
-    puts(wyr);
+
+    //Test generatora exprażeń
+    /*for (int i = 0; i < 50000; i++)
+    {
+        puts(Generateexprression(Length));
+    }*/
+
+    puts(expr);
 
     FILE* f;
 
     char filename[] = "./dane.txt";
 
     f = fopen(filename, "w");
-    fprintf(f, wyr, 0);
+    fprintf(f, expr, 0);
     fclose(f);
 
 
@@ -70,30 +77,32 @@ char* replace_char(char* str, char find, char replace) {
     return str;
 }
 
-int OpenedBrackets = 0;
 
-char* GenerateExpression(int Length) {
-    //Definiowanie wyrażenia
-    char* wyr;
-    wyr = malloc((sizeof(char) * (Length)));
+
+char* Generateexprression(int Length) {
+    //Definiowanie exprażenia
+    char* expr;
+    expr = malloc((sizeof(char) * (Length)));
     srand((unsigned int)time(NULL));
 
     int i;
     for (i = 0; i < Length; i++) {
         char l;
 
+        //Sprawdzanie jaki znak został wygenerowany jako ostatni
         Symbols lastChar = none;
 
         if(i - 1 != -1){
-            lastChar = GetSymbol(wyr[i - 1]);
+            lastChar = GetSymbol(expr[i - 1]);
         }
 
-        OpenedBrackets = 0;
+        //Zliczanie ilości niedomkniętych nawiasów
+        int OpenedBrackets = 0;
 
         for (int j = 0; j < i; j++) {
-            if (wyr[j] == '(')
+            if (expr[j] == '(')
                 OpenedBrackets += 1;
-            else if (wyr[j] == ')')
+            else if (expr[j] == ')')
                 OpenedBrackets -= 1;
         }
 
@@ -113,17 +122,29 @@ char* GenerateExpression(int Length) {
         }
         else if (Length - i > 3) {
             if (OpenedBrackets > 0 && Length - i - 1 == OpenedBrackets) {
+                //do końca ciągu jest tyle znaków ile niedomkniętych nawiasów
                 l = GetSingleChar(bracRight);
             }
             else if (lastChar == bracLeft) {
-                Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, bracLeft };
+                //Poprawne znaki po otwarciu nawiasu:
+                //0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -, (
+                Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, minus, bracLeft };
                 int size = sizeof(Allowed) / sizeof(Allowed[0]);
                 l = GetAllowedChar(Allowed, size);
             }
 
-            else if ((lastChar == times || lastChar == divide || lastChar == plus || lastChar == minus))
+            else if ((lastChar == times || lastChar == plus || lastChar == minus))
             {
+                //Symbole dozwolone po znaku działania
+                // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, (
                 Symbols Allowed[] = { zero, one, two, three, four, five, six, seven, eight, nine, bracLeft };
+                int size = sizeof(Allowed) / sizeof(Allowed[0]);
+                l = GetAllowedChar(Allowed, size);
+            }
+            else if (lastChar == divide) {
+                //Symbole dozwolone po znaku działania
+                // 1, 2, 3, 4, 5, 6, 7, 8, 9, (
+                Symbols Allowed[] = { one, two, three, four, five, six, seven, eight, nine, bracLeft };
                 int size = sizeof(Allowed) / sizeof(Allowed[0]);
                 l = GetAllowedChar(Allowed, size);
             }
@@ -220,19 +241,19 @@ char* GenerateExpression(int Length) {
         }
 
 
-        wyr[i] = l;
+        expr[i] = l;
     }
 
     for (int j = i - 1; j >= 0; j--) {
-        if (j > 0 && wyr[j] >= '0' && wyr[j] <= '9' && wyr[j - 1] == ')')
+        if (j > 0 && expr[j] >= '0' && expr[j] <= '9' && expr[j - 1] == ')')
         {
-            wyr[j - 1] = wyr[j];
-            wyr[j] = ')';
+            expr[j - 1] = expr[j];
+            expr[j] = ')';
         }
     }
 
-    wyr[i] = '\0';
-    return wyr;
+    expr[i] = '\0';
+    return expr;
 }
 
 int RndNum(int to) {
