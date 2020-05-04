@@ -43,12 +43,6 @@ int main(int argc, char *argv[])
     }
     char* wyr;
 
-    for (int i = 0; i < 50000; i++)
-    {
-        puts(GenerateExpression(Length));
-    }
-
-
     wyr = GenerateExpression(Length);
     wyr = replace_char(wyr, " ", "");
 
