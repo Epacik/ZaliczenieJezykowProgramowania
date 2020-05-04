@@ -308,7 +308,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\main.c" />
+    <ClCompile Include="src\csprng.c" />
+    <ClCompile Include="src\main.c" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\ZERO_CHECK.vcxproj">
