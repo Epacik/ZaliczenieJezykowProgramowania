@@ -33,18 +33,21 @@ ts = test.split('\n')
 
 passed = 0
 failed = 0
+blop = 0
 
 for l in ts:
     if(l.startswith("passed")): 
         passed += 1
-    else: 
+    elif(l.startswith("FAILED")): 
         failed += 1;
+    else:
+        blop += 1
 
 ratePassed = (100 * passed)/(passed + failed)
 rateFailed = (100 * failed)/(passed + failed)
-print(f"passed: {str(passed)} ({str(ratePassed)}),  failed: {str(failed)} ({str(rateFailed)})")
+print(f"passed: {str(passed)} ({str(ratePassed)}),  failed: {str(failed)} ({str(rateFailed)}), blops: {str(blop)}")
 
-test += f"\n\npassed: {str(passed)} ({str(ratePassed)}),  failed: {str(failed)} ({str(rateFailed)})"
+test += f"\n\npassed: {str(passed)} ({str(ratePassed)}),  failed: {str(failed)} ({str(rateFailed)}), blops: {str(blop)}"
 
 f = open("exprTestResult.txt", "w")
 f.write(test)
