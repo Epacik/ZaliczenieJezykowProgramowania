@@ -1,10 +1,12 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <regex>
 
 //  Dla tworzenia ziarna do srand
 #include "duthomhas/csprng.h"
+
+// Międzyplatformowa obsługa regex
+#include "subreg.h"
 
 
 #pragma region Defs
