@@ -12,7 +12,7 @@
 #pragma region Defs
 
 // enum zawierający symbole których może użyć generator
-typedef enum {
+typedef enum Sm {
     none = -1, zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7, eight = 8, nine = 9, plus = 10, minus = 11, times = 12, divide = 13, bracLeft = 14, bracRight = 15
 } Symbols;
 
@@ -45,9 +45,20 @@ char* replace_char(char* str, char find, char replace);
 // Zwraca jeden znak z tablicy mogących wystąpić znaków. Do funkcji przekazywana jest tablica z symbolami które mogą zostać wylosowane (np.: zaraz po zamknięciu nawiasu nie powinna się znajdować liczba, więc cyfry nie znalazłyby się w tej tablicy), a także jej wielkość. Mimo, że to powoduje powstanie sporej ilości kodu którą można by uniknąć, przenosząc obliczanie wielkości tablicy do wnętrza funkcji, ale daje to możliwość łatwiejszego losowania z częściowej zawartości tablicy, np.: losowanie tylko z pierwszych 15 znaków podczas gdy tablica miałaby 17.
 char GetAllowedChar(Symbols symbols[], int size);
 
-//Generuje losową liczbę z przedziału od 0 do argumentu 'to'
+// Generuje losową liczbę z przedziału od 0 do argumentu 'to'
 int RndNum(int to);
 
+// Struktura zawierająca drzewko parsowania wyrażenia matematycznego.
+typedef struct Exp {
+    // Lewa strona wyrażenia
+    struct Exp* Left;
+
+    // Prawa strona wyrażenia
+    struct Exp* Right;
+
+    // Symbol oddzielający dwie strony wyrażenia
+    Symbols Symbol;
+} Expression;
 #pragma endregion
 
 
