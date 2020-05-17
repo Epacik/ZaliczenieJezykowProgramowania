@@ -59,6 +59,8 @@ typedef struct Exp {
     // Symbol oddzielający dwie strony wyrażenia
     Symbols Symbol;
 } Expression;
+
+Expression Parse(char* expr);
 #pragma endregion
 
 
@@ -98,6 +100,7 @@ int main(int argc, char *argv[])
         return -1;
     }
     char* expr;
+
 
     expr = GenerateExpression(Length);
     expr = replace_char(expr, " ", "");
@@ -353,7 +356,9 @@ char GetAllowedChar(Symbols symbols[], int size) {
 }
 
 
+Expression Parse(char* exp) {
 
+}
 
 
 
