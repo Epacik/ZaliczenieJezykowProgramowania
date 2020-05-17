@@ -65,6 +65,13 @@ Expression Parse(char* expr);
 // Zwraca wynik obliczonego wyrażenia
 double EvaluateExpression(Expression* expr);
 
+int IndexOf(char* Str, char* Search);
+int LastIndexOf(char* Str, char* Search);
+
+char* SubStr(char* source, int start, int length);
+
+//char* SubStrToEnd(char* source, int start);
+
 #pragma endregion
 
 
@@ -372,11 +379,38 @@ double EvaluateExpression(Expression* expr) {
 
 
 
+#pragma region String Tools
 
 
 
+int IndexOf(char* Str, char* Search) {
+    if (Str == NULL || Search == NULL) return -1;
 
+    char* posPoint = strchr(Str, Search[0]);
+    int index = (posPoint == NULL ? -1 : posPoint - Str);
+}
 
+int LastIndexOf(char* Str, char* Search) {
+    if (Str == NULL || Search == NULL) return -1;
 
+    char* posPoint = strrchr(Str, Search[0]);
+    int index = (posPoint == NULL ? -1 : posPoint - Str);
 
+}
 
+char* SubStr(char* src, int start, int length) {
+    char* str;
+    str = malloc((sizeof(char) * (length)));
+
+    while (length > 0) {
+        *str = *(src + start);
+        str++;
+        src++;
+        length--;
+    }
+
+    *str = '\0';
+    return str;
+}
+
+#pragma endregion
