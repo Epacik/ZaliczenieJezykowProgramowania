@@ -61,6 +61,10 @@ typedef struct Exp {
 } Expression;
 
 Expression Parse(char* expr);
+
+// Zwraca wynik obliczonego wyrażenia
+double EvaluateExpression(Expression* expr);
+
 #pragma endregion
 
 
@@ -357,6 +361,11 @@ char GetAllowedChar(Symbols symbols[], int size) {
 
 
 Expression Parse(char* exp) {
+
+}
+
+
+double EvaluateExpression(Expression* expr) {
 
 }
 
