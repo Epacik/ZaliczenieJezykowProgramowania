@@ -270,14 +270,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClCompile Include="C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\src\csprng.c" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\ZERO_CHECK.vcxproj">
-      <Project>{148E7C3F-423D-3AE1-867A-CD9B83940716}</Project>
-      <Name>ZERO_CHECK</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
