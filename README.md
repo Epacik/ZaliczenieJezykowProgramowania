@@ -5,7 +5,7 @@ Aby uruchomić projekt należy użyć pliku '**zaliczeniejezykowprogramowania.sl
 
 ## Kod źródłowy
 
-Cały napisany przezemnie kod znajduje się w pliku **main.c**. Plik **csprng.c** ( https://github.com/Duthomhas/CSPRNG ) został dołączony wyłącznie w celu zwiększenia losowości ziarna dla funkcji *srand*, a co za tym idzie, zwiększenia różnorodności generowanych wyrażeń matematycznych. Głównym powodem zwiększenia tej różnorodności było szybsze testowanie generatora wyrażeń matematycznych. 
+Cały napisany przezemnie kod znajduje się w pliku **main.c**. Plik **csprng.c** ( https://github.com/Duthomhas/CSPRNG ) został dołączony wyłącznie w celu zwiększenia losowości ziarna dla funkcji *srand*, a co za tym idzie, zwiększenia różnorodności generowanych wyrażeń matematycznych. Głównym powodem zwiększenia tej różnorodności było umożliwienie szybszego testowania generatora wyrażeń matematycznych. 
 
 ## Testy generatora
 
