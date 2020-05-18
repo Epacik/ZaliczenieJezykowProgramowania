@@ -1,3 +1,1 @@
-C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\Debug\csprng.pdb
 C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\csprng.dir\Debug\csprng.pdb
-C:\Users\Epat\Documents\GitHub\ZaliczenieJezykowProgramowania1\csprng.dir\Debug\csprng.pdb
