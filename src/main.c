@@ -3,12 +3,11 @@
 #include <time.h>
 #include <stdbool.h>
 #include <string.h>
+#include <locale.h>
 
 //  Dla tworzenia ziarna do srand
-#include "duthomhas/csprng.h"
+#include "./duthomhas/csprng.h"
 
-// Międzyplatformowa obsługa regex
-#include "subreg.h"
 
 #pragma region Defs
 
@@ -120,7 +119,7 @@ int main(int argc, char* argv[])
 	char* expr;
 
 	expr = GenerateExpression(Length);
-	expr = replace_char(expr, " ", "");
+	//expr = replace_char(expr, " ", "");
 
 	if (argc == 1) {
 		puts("Wygenerowane wyrażenie:\n");
