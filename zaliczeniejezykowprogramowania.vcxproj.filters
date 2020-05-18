@@ -4,12 +4,6 @@
     <ClCompile Include="C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\csprng.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\subreg.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\Epat\projects\ZaliczenieJezykowProgramowania\CMakeLists.txt" />

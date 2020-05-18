@@ -38,33 +38,15 @@ char* GenerateExpression(int Length);
 // Zwraca znak odpowiadający przekazanej wartości enuma 'Symbols'. Jako argument jest użyty int, ponieważ nie chciało mi się szukać jak wstawić typ danych 'Symbols' jako typ argumentu, szczególnie, że to działa wystarczająco dobrze
 char GetSingleChar(int ID);
 
-//Funkcja służąca do zamiany jednego znaku na inny w ciągu znaków
-char* replace_char(char* str, char find, char replace);
-
 // Zwraca jeden znak z tablicy mogących wystąpić znaków. Do funkcji przekazywana jest tablica z symbolami które mogą zostać wylosowane (np.: zaraz po zamknięciu nawiasu nie powinna się znajdować liczba, więc cyfry nie znalazłyby się w tej tablicy), a także jej wielkość. Mimo, że to powoduje powstanie sporej ilości kodu którą można by uniknąć, przenosząc obliczanie wielkości tablicy do wnętrza funkcji, ale daje to możliwość łatwiejszego losowania z częściowej zawartości tablicy, np.: losowanie tylko z pierwszych 15 znaków podczas gdy tablica miałaby 17.
 char GetAllowedChar(Symbols symbols[], int size);
 
 // Generuje losową liczbę z przedziału od 0 do argumentu 'to'
 int RndNum(int to);
 
-// Struktura zawierająca drzewko parsowania wyrażenia matematycznego.
-typedef struct Exp {
-	// Lewa strona wyrażenia
-	struct Exp* Left;
-
-	// Prawa strona wyrażenia
-	struct Exp* Right;
-
-	// Symbol oddzielający dwie strony wyrażenia
-	Symbols Symbol;
-
-	char* value;
-	int valuesize;
-} Expression;
-
 #pragma endregion
 
-const char* Expr;
+char* Expr;
 
 char Pntr() {
 	return *Expr;
@@ -122,11 +104,12 @@ int main(int argc, char* argv[])
 	//expr = replace_char(expr, " ", "");
 
 	if (argc == 1) {
-		puts("Wygenerowane wyrażenie:\n");
+		puts("Wygenerowane wyrażenie:");
 		puts(expr);
 	}
 	FILE* f;
 
+	// Zapisywanie do pliku
 	char filename[] = "./dane.txt";
 
 	f = fopen(filename, "w");
@@ -135,7 +118,9 @@ int main(int argc, char* argv[])
 
 	fclose(f);
 
-	//free(expr);
+	free(expr);
+
+	expr = NULL;
 
 	f = fopen(filename, "r");
 
@@ -143,32 +128,24 @@ int main(int argc, char* argv[])
 	long filesize = ftell(f);
 	rewind(f);
 
-	Expr = malloc(filesize);
+	Expr = malloc(filesize + 1);
 	fread(Expr, 1, filesize, f);
-
+	Expr[filesize] = '\0';
 	double result = Evaluate(Expr);
 
 	char c[27];
 
-	puts("\n\nWynik wygenerowanego wyrażenia: ");
-	printf("%f", result);
+	puts("\nWynik wygenerowanego wyrażenia: ");
+	printf("%f\n", result);
 
 	return 0;
 }
 
-char* replace_char(char* str, char find, char replace) {
-	char* current_pos = strchr(str, find);
-	while (current_pos) {
-		*current_pos = replace;
-		current_pos = strchr(current_pos, find);
-	}
-	return str;
-}
 
 char* GenerateExpression(int Length) {
-	// Definiowanie wyrażenia
+	// Definiowanie wyrażenia (dodatkowy bajt jest przeznaczony dla '\0')
 	char* expr;
-	expr = malloc((sizeof(char) * (Length)));
+	expr = malloc((sizeof(char) * (Length + 1)));
 
 	int i;
 	for (i = 0; i < Length; i++) {
@@ -205,12 +182,13 @@ char* GenerateExpression(int Length) {
 				l = GetAllowedChar(Allowed, size);
 			}
 		}
+		else if (OpenedBrackets > 0 && Length - i - 1 == OpenedBrackets) {
+			// do końca ciągu jest tyle znaków ile niedomkniętych nawiasów
+			l = GetSingleChar(bracRight);
+		}
 		else if (Length - i > 3) {
-			if (OpenedBrackets > 0 && Length - i - 1 == OpenedBrackets) {
-				// do końca ciągu jest tyle znaków ile niedomkniętych nawiasów
-				l = GetSingleChar(bracRight);
-			}
-			else if (lastChar == bracLeft) {
+
+			if (lastChar == bracLeft) {
 				// Poprawne znaki po otwarciu nawiasu:
 				//  1, 2, 3, 4, 5, 6, 7, 8, 9, -, (
 				Symbols Allowed[] = { one, two, three, four, five, six, seven, eight, nine, minus, bracLeft };
@@ -324,6 +302,7 @@ char* GenerateExpression(int Length) {
 		expr[i] = l;
 	}
 
+	// W przypadku gdy na ostatniej pozycji znajduje się cyfra a zaraz przed nią zamknięcie nawiasu, cyfra jest przesuwana w lewo, a nawias w prawo
 	for (int j = i - 1; j >= 0; j--) {
 		if (j > 0 && expr[j] >= '0' && expr[j] <= '9' && expr[j - 1] == ')')
 		{
@@ -352,6 +331,7 @@ char* GenerateExpression(int Length) {
 		}
 	}
 
+	// Zakańczanie ciągu
 	expr[i] = '\0';
 	return expr;
 }
@@ -368,9 +348,8 @@ char GetSingleChar(int ID) {
 Symbols GetSymbol(char sym) {
 	int i = 0;
 	while (sym != SymbolChars[i])
-	{
 		i++;
-	}
+
 	return Syms[i];
 };
 
@@ -431,6 +410,3 @@ double EvNum() {
 	}
 	return res;
 }
-
-
-
