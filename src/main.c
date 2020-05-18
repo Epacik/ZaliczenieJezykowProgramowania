@@ -44,7 +44,7 @@ char GetAllowedChar(Symbols symbols[], int size);
 // Generuje losową liczbę z przedziału od 0 do argumentu 'to'
 int RndNum(int to);
 
-#pragma endregion
+
 
 char* Expr;
 
@@ -64,6 +64,8 @@ double EvNum();
 double EvFct();
 
 double EvTer();
+
+#pragma endregion
 
 // Program jest napisany w C11, ISO/IEC 9899:2011 (https://en.wikipedia.org/wiki/C11_(C_standard_revision))
 int main(int argc, char* argv[])
