@@ -32,3 +32,18 @@ zaliczen.*.tlog
 *.log
 tests/exprTestResult.txt
 tests/exprTestResult — kopia (2).txt
+csprng.dir/Debug/csprng.tlog/CL.read.1.tlog
+csprng.dir/Debug/csprng.tlog/CL.write.1.tlog
+csprng.dir/Debug/csprng.pdb
+csprng.dir/Debug/csprng.obj
+csprng.dir/Debug/csprng.tlog/CL.command.1.tlog
+csprng.dir/Debug/csprng.tlog/csprng.lastbuildstate
+csprng.dir/Debug/csprng.tlog/csprng.write.1u.tlog
+csprng.dir/Debug/csprng.tlog/CustomBuild.command.1.tlog
+csprng.dir/Debug/csprng.tlog/CustomBuild.read.1.tlog
+csprng.dir/Debug/csprng.tlog/CustomBuild.write.1.tlog
+csprng.dir/Debug/csprng.tlog/Lib-link.read.1.tlog
+csprng.dir/Debug/csprng.tlog/Lib-link.write.1.tlog
+csprng.dir/Debug/csprng.tlog/Lib.command.1.tlog
+csprng.dir/Debug/csprng.vcxproj.FileListAbsolute.txt
+csprng.dir/Debug/csprng.vcxproj.FileListAbsolute.txt
