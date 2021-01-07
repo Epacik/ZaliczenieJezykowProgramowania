@@ -44,8 +44,6 @@ char GetAllowedChar(Symbols symbols[], int size);
 // Generuje losową liczbę z przedziału od 0 do argumentu 'to'
 int RndNum(int to);
 
-
-
 char* Expr;
 
 char Pntr() {
@@ -70,6 +68,7 @@ double EvTer();
 // Program jest napisany w C11, ISO/IEC 9899:2011 (https://en.wikipedia.org/wiki/C11_(C_standard_revision))
 int main(int argc, char* argv[])
 {
+	//Dla obsługi polskich znaków
 	setlocale(0, "pl-PL");
 
 	// Tworzenie ziarna do losowania
@@ -80,6 +79,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
+	// Generowanie ziarna dla srand
 	long n = csprng_get_int(rng);
 	srand((unsigned int)n);
 
@@ -342,9 +342,7 @@ int RndNum(int to) {
 	return (int)(rand() % to);
 }
 
-char GetSingleChar(int ID) {
-	return SymbolChars[ID + 1];
-}
+
 
 // /
 Symbols GetSymbol(char sym) {
@@ -354,6 +352,10 @@ Symbols GetSymbol(char sym) {
 
 	return Syms[i];
 };
+
+char GetSingleChar(int ID) {
+	return SymbolChars[ID + 1];
+}
 
 char GetAllowedChar(Symbols symbols[], int size) {
 	int index = RndNum(size);
